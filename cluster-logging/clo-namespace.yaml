@@ -1,0 +1,9 @@
+# To create namespace for the Cluster Logging Operator
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: openshift-logging
+  annotations: 
+    openshift.io/node-selector: ""
+  lables:
+    openshift.io/cluster-monitoring: "true"

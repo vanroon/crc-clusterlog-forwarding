@@ -1,0 +1,25 @@
+apiVersion: logging.openshift.io/v1
+kind: ClusterLogForwarder
+metadata:
+  name: instance
+  namespace: openshift-logging
+spec:
+  inputs:
+  - application:
+      namespaces:
+      - example-application
+    name: my-app-logs
+  outputs:
+  - name: openshift-logforwarding-splunk
+    secret:
+      name: openshift-logforwarding-splunk
+    type: fluentdForward
+    url: tls://openshift-logforwarding-splunk.openshift-logging.svc:24224
+  pipelines:
+  - inputRefs:
+    - my-app-logs
+    labels:
+      project: example-application
+    name: container-logs
+    outputRefs:
+    - openshift-logforwarding-splunk
